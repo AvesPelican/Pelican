@@ -1,4 +1,4 @@
-package com.zerp.pelican.lexer;
+package com.zero.pelican.lexer;
 
 public class Token {
     private TokenType type;

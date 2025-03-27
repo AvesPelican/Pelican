@@ -1,4 +1,4 @@
-package com.zerp.pelican;
+package com.zero.pelican;
 
 import com.zero.pelican.lexer.Lexer;
 import com.zero.pelican.lexer.Token;

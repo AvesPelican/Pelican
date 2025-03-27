@@ -1,4 +1,4 @@
-package com.zerp.pelican.lexer;
+package com.zero.pelican.lexer;
 
 import java.util.ArrayList;
 import java.util.List;
