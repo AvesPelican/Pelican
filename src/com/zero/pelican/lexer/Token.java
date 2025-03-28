@@ -2,7 +2,7 @@ package com.zero.pelican.lexer;
 
 public class Token {
     private TokenType type;
-    private String value = null;
+    private String value = "";
 
     public Token(TokenType type, String value){
         this.type = type;

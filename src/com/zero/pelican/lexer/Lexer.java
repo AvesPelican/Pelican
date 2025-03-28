@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Lexer {
-    private static final String OPERATOR_CHARS = "+-*/";
-    private static final TokenType[] OPERATOR_TOKENS = {
+    //private static final String OPERATOR_CHARS = "+-*/";
+    /* private static final TokenType[] OPERATOR_TOKENS = {
     TokenType.PLUS, TokenType.MINUS, TokenType.STAR, TokenType.SLASH
-    };
+    };*/
 
     private final String input;
     private final List<Token> tokens;
@@ -22,8 +22,27 @@ public class Lexer {
         while (pos < input.length()){
             final char current = peek(0);
             if(Character.isDigit(current)) tokenizeNumber();
-            else if (OPERATOR_CHARS.indexOf(current) != -1){
-                tokenizeOperator();
+            else if (current == '+'){
+                addToken(TokenType.PLUS, "+");
+                next();
+            }else if (current == '-'){
+                addToken(TokenType.MINUS, "-");
+                next();
+            }else if (current == '*'){
+                addToken(TokenType.STAR, "*");
+                next();
+            }else if (current == '/'){
+                addToken(TokenType.SLASH, "/");
+                next();
+            }else if (current == '='){
+                addToken(TokenType.ASSIGN, "=");
+                next();
+            } else if (Character.isAlphabetic(current)){
+                tokenizeIdOrKeyWord();
+                next();
+            }else if (current == '\"'){
+                tokenizeStringLiteral();
+                next();
             }  else if (Character.isWhitespace(current)) {
                 next();  // Пропускаем пробелы
             } else {
@@ -37,6 +56,10 @@ public class Lexer {
     private char next(){
         pos++;
         return peek(0);
+    }
+    private boolean next(char next_sym){
+        char current_next_sym = peek(1);
+        return current_next_sym == next_sym;
     }
 
 
@@ -63,10 +86,30 @@ public class Lexer {
         addToken(TokenType.NUMBER_LITERAL, buffer.toString());
     }
 
-    private void tokenizeOperator(){
-        final int position = OPERATOR_CHARS.indexOf(peek(0));
-        addToken(OPERATOR_TOKENS[position]);
+    private void tokenizeIdOrKeyWord(){
+        StringBuilder buffer = new StringBuilder();
+        char current = peek(0);
+        while (Character.isLetterOrDigit(current)){
+            buffer.append(current);
+            current = next();
+        }
+        String finalstring = buffer.toString();
+        if (finalstring.equals("var")){
+            addToken(TokenType.VAR, finalstring);
+        } else {
+            addToken(TokenType.ID, finalstring);
+        }
+    }
+    private void tokenizeStringLiteral(){
         next();
+        StringBuilder buffer = new StringBuilder();
+        char current = peek(0);
+        while (current != '\"'){
+            buffer.append(current);
+            current = next();
+        }
+
+        addToken(TokenType.STRING_LITERAL, buffer.toString());
     }
 
 }

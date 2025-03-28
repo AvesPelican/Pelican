@@ -12,5 +12,9 @@ public enum TokenType {
     INT,
     STRING,
 
+    ID,
+    VAR,
+    ASSIGN,
+
     EOF,
 }

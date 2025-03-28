@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-       final List<Token> tokens = new Lexer("2+2*2/5").tokenize();
+       final List<Token> tokens = new Lexer("var a = \"lexer top\"").tokenize();
        for (Token token : tokens){
            System.out.print(token.getType());
            System.out.print(" ");
