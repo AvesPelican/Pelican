@@ -34,8 +34,17 @@ public class Lexer {
             }else if (current == '/'){
                 addToken(TokenType.SLASH, "/");
                 next();
-            }else if (current == '='){
+            }else if (current == '=') {
                 addToken(TokenType.ASSIGN, "=");
+                next();
+            }else if (current == '(') {
+                    addToken(TokenType.LPAREN, "(");
+                    next();
+            } else if (current == ')'){
+                addToken(TokenType.RPAREN, ")");
+                next();
+            }else if (current == '!'){
+                addToken(TokenType.BANG, "!");
                 next();
             } else if (Character.isAlphabetic(current)){
                 tokenizeIdOrKeyWord();

@@ -5,6 +5,9 @@ public enum TokenType {
     SLASH,
     PLUS,
     MINUS,
+    LPAREN, // (
+    RPAREN, // )
+    BANG,
 
     NUMBER_LITERAL,
     STRING_LITERAL,
