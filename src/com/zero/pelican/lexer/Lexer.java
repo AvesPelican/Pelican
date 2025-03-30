@@ -35,7 +35,7 @@ public class Lexer {
                 addToken(TokenType.SLASH, "/");
                 next();
             }else if (current == '=') {
-                addToken(TokenType.ASSIGN, "=");
+                addToken(TokenType.EQ, "=");
                 next();
             }else if (current == '(') {
                     addToken(TokenType.LPAREN, "(");
@@ -43,10 +43,10 @@ public class Lexer {
             } else if (current == ')'){
                 addToken(TokenType.RPAREN, ")");
                 next();
-            }else if (current == '!'){
+            }/*else if (current == '!'){
                 addToken(TokenType.BANG, "!");
                 next();
-            } else if (Character.isAlphabetic(current)){
+            }*/ else if (Character.isAlphabetic(current)){
                 tokenizeIdOrKeyWord();
                 next();
             }else if (current == '\"'){
@@ -88,7 +88,11 @@ public class Lexer {
     private void tokenizeNumber(){
         final StringBuilder buffer = new StringBuilder();
         char current = peek(0);
-        while (Character.isDigit(current)){
+        while (true){
+            if (current == '.'){
+                if (buffer.indexOf(".") != -1 ) throw new RuntimeException("Invalid float number");
+            } else if (!Character.isDigit(current)){break;}
+
             buffer.append(current);
             current = next();
         }
@@ -98,7 +102,7 @@ public class Lexer {
     private void tokenizeIdOrKeyWord(){
         StringBuilder buffer = new StringBuilder();
         char current = peek(0);
-        while (Character.isLetterOrDigit(current)){
+        while (Character.isLetterOrDigit(current) || current == '_' || current == '$'){
             buffer.append(current);
             current = next();
         }

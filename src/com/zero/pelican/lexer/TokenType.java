@@ -7,7 +7,7 @@ public enum TokenType {
     MINUS,
     LPAREN, // (
     RPAREN, // )
-    BANG,
+
 
     NUMBER_LITERAL,
     STRING_LITERAL,
@@ -17,7 +17,7 @@ public enum TokenType {
 
     ID,
     VAR,
-    ASSIGN,
+    EQ,
 
     EOF,
 }

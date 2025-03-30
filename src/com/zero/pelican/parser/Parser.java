@@ -2,10 +2,7 @@ package com.zero.pelican.parser;
 
 import com.zero.pelican.lexer.Token;
 import com.zero.pelican.lexer.TokenType;
-import com.zero.pelican.parser.ast.BinaryExpression;
-import com.zero.pelican.parser.ast.Expression;
-import com.zero.pelican.parser.ast.NumberExpression;
-import com.zero.pelican.parser.ast.UnaryExpression;
+import com.zero.pelican.parser.ast.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +19,28 @@ public class Parser {
         size = tokens.size();
     }
 
-    public List<Expression> parse(){
-        final List<Expression> result = new ArrayList<>();
+    public List<Statement> parse(){
+        final List<Statement> result = new ArrayList<>();
         while (!match(TokenType.EOF)){
-            result.add(expression());
+            result.add(statement());
         }
         return result;
     }
 
+    private Statement statement(){
+        return assignmentStatement();
+    }
+
+    private Statement assignmentStatement(){
+        final Token current = peek(0);
+        if (current.getType() == TokenType.ID && peek(1).getType() == TokenType.EQ){
+            consume(TokenType.ID);
+            final String variable = current.getValue();
+            consume(TokenType.EQ);
+            return new AssignmentStatement(variable,expression());
+        }
+        throw new RuntimeException("Unknown statement");
+    }
 
     private Expression expression(){
         return additive();
@@ -74,38 +85,33 @@ public class Parser {
         if (match(TokenType.PLUS)) {
             return primary();
         }
-        if (match(TokenType.BANG)) {
+        /*if (match(TokenType.BANG)) {
             return new UnaryExpression('!', primary());
-        }
+        }*/
         return primary();
     }
 
     private Expression primary(){
         final Token current = peek(0);
         if (match(TokenType.NUMBER_LITERAL)) {
-            Expression number = new NumberExpression(Double.parseDouble(peek(-1).getValue()));
-
-            // Обрабатываем постфиксные операторы (например, факториал)
-            while (true) {
-                if (match(TokenType.BANG)) {
-                    number = new UnaryExpression('!', number);
-                    continue;
-                }
-                break;
-            }
-            return number;
+            return new NumberExpression(Double.parseDouble(current.getValue()));
         }
+        if (match(TokenType.ID)) {
+                return new VariableExpression(current.getValue());}
         if (match(TokenType.LPAREN)){
             Expression result = expression();
-            if (!match(TokenType.RPAREN)){
-            throw new RuntimeException("Missing closing parent");}
+            match(TokenType.RPAREN);
             return result;
         }
-        else {
-
             throw new RuntimeException("Unknown expression " + peek(0));
-        }
 
+    }
+
+    private Token consume(TokenType type){
+        final Token current = peek(0);
+        if (type != current.getType()) throw new RuntimeException("Token " + current + " doesn't match " + type);
+        pos++;
+        return current;
     }
 
 
