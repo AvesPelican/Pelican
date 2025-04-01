@@ -12,8 +12,8 @@ public enum TokenType {
     NUMBER_LITERAL,
     STRING_LITERAL,
 
-    INT,
-    STRING,
+   //кейворды
+   PRINT,
 
     ID,
     VAR,
