@@ -1,6 +1,6 @@
-package com.zero.pelican.parser.ast;
+package com.zero.pelican.main.parser.ast;
 
-import com.zero.pelican.lib.Variables;
+import com.zero.pelican.main.lib.Variables;
 
 public class VariableExpression implements Expression{
     private final String name;

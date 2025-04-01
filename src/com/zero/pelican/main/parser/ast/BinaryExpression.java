@@ -1,4 +1,4 @@
-package com.zero.pelican.parser.ast;
+package com.zero.pelican.main.parser.ast;
 
 public class BinaryExpression implements Expression {
     private final Expression expr1, expr2;

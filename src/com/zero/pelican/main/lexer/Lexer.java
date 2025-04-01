@@ -1,4 +1,4 @@
-package com.zero.pelican.lexer;
+package com.zero.pelican.main.lexer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,10 +106,13 @@ public class Lexer {
             buffer.append(current);
             current = next();
         }
-        String finalstring = buffer.toString();
+        final String finalstring = buffer.toString();
         if (finalstring.equals("var")){
             addToken(TokenType.VAR, finalstring);
-        } else {
+        } else if(finalstring.equals("println")){
+            addToken(TokenType.PRINTLN, "println");
+        }
+        else {
             addToken(TokenType.ID, finalstring);
         }
     }

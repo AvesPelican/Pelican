@@ -1,4 +1,4 @@
-package com.zero.pelican.lib;
+package com.zero.pelican.main.lib;
 
 import java.util.HashMap;
 import java.util.Map;

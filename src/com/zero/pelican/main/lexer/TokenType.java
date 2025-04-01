@@ -1,4 +1,4 @@
-package com.zero.pelican.lexer;
+package com.zero.pelican.main.lexer;
 
 public enum TokenType {
     STAR,
@@ -13,7 +13,7 @@ public enum TokenType {
     STRING_LITERAL,
 
    //кейворды
-   PRINT,
+   PRINTLN,
 
     ID,
     VAR,

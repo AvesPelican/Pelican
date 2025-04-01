@@ -1,8 +1,8 @@
-package com.zero.pelican.parser;
+package com.zero.pelican.main.parser;
 
-import com.zero.pelican.lexer.Token;
-import com.zero.pelican.lexer.TokenType;
-import com.zero.pelican.parser.ast.*;
+import com.zero.pelican.main.lexer.Token;
+import com.zero.pelican.main.lexer.TokenType;
+import com.zero.pelican.main.parser.ast.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +28,9 @@ public class Parser {
     }
 
     private Statement statement(){
+        if(match(TokenType.PRINTLN)){
+            return  new PrintStatement(expression());
+        }
         return assignmentStatement();
     }
 
@@ -39,7 +42,7 @@ public class Parser {
             consume(TokenType.EQ);
             return new AssignmentStatement(variable,expression());
         }
-        throw new RuntimeException("Unknown statement");
+        throw new RuntimeException("Unknown statement - " + peek(0));
     }
 
     private Expression expression(){
