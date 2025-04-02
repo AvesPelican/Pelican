@@ -1,37 +1,19 @@
 package com.zero.pelican.main.lexer;
 
 public class Token {
-    private TokenType type;
-    private String value = "";
+    final TokenType type;
+    final String lexeme;
+    final Object literal;
+    final int line;
 
-    public Token(TokenType type, String value){
+    Token(TokenType type, String lexeme, Object literal, int line) {
         this.type = type;
-        this.value = value;
+        this.lexeme = lexeme;
+        this.literal = literal;
+        this.line = line;
     }
 
-    public Token(TokenType type){
-        this.type = type;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public void setType(TokenType type) {
-        this.type = type;
-    }
-
-    public TokenType getType() {
-        return type;
-    }
-
-    @Override
     public String toString() {
-        return "" + type;
-
+        return type + " " + lexeme + " " + literal;
     }
 }

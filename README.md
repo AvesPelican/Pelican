@@ -2,6 +2,6 @@
 
 Pelican is a simple scripting programming language
 
-Сontact email - avespelican@yandex.ru
+Contact email - avespelican@yandex.ru
 
-src/com/zero/pelican - source files
+src/com/zero/pelican/main - source files
